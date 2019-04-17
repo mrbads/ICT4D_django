@@ -1,6 +1,26 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Question
+from .models import Question, Choice
 
-admin.site.register(Question)
+class ChoiceInline(admin.TabularInline):
+    """docstring for ChoiceInline."""
+    model = Choice
+    extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+    """docstring for QuestionAdmin."""
+    fieldsets = [
+        (None, {'fields': ['question_text']}),
+        ('Date information', {'fields': ['pub_date']}),
+    ]
+    inlines = [ChoiceInline]
+
+class QuestionAdmin(admin.ModelAdmin):
+    """docstring for QuestionAdmin."""
+    list_display = ('question_text', 'pub_date', 'was_published_recently')
+    list_filter = ['pub_date']
+    search_fields = ['question_text']
+
+
+admin.site.register(Question, QuestionAdmin)
