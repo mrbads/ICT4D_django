@@ -10,12 +10,3 @@ class FloorSize(models.Model):
 
     def __str__(self):
         return self.name
-
-class Calculated(models.Model):
-    """docstring for Calculated."""
-
-    name = models.ForeignKey(FloorSize, on_delete=models.CASCADE)
-    square_feet = models.PositiveIntegerField()
-
-    def __str__(self):
-        return self.square_feet
