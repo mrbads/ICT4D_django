@@ -12,15 +12,15 @@ class QuestionAdmin(admin.ModelAdmin):
     """docstring for QuestionAdmin."""
     fieldsets = [
         (None, {'fields': ['question_text']}),
-        ('Date information', {'fields': ['pub_date']}),
+        ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
     ]
     inlines = [ChoiceInline]
 
-class QuestionAdmin(admin.ModelAdmin):
-    """docstring for QuestionAdmin."""
-    list_display = ('question_text', 'pub_date', 'was_published_recently')
-    list_filter = ['pub_date']
-    search_fields = ['question_text']
+# class QuestionAdmin(admin.ModelAdmin):
+#     """docstring for QuestionAdmin."""
+#     list_display = ('question_text', 'pub_date', 'was_published_recently')
+#     list_filter = ['pub_date']
+#     search_fields = ['question_text']
 
 
 admin.site.register(Question, QuestionAdmin)
