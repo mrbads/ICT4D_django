@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-from .models import FloorSize
+from .models import FloorSize, RoomForm
 
 # Create your views here.
 class IndexView(generic.ListView):
@@ -43,14 +43,19 @@ class ResultsView(generic.DetailView):
 #     response = "You're looking at the results of room %s."
 #     return HttpResponse(response % room_id)
 
-def input(request, room_id):
-    room = get_object_or_404(FloorSize, pk=room_id)
-    try:
-        selected_room = room.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        return render(request, 'room/detail.html', {
-            'name': name,
-        })
+def new(request):
+    template = 'room/index.html'
+    form = RoomForm()
+    if request.method == 'POST':
+        form = RoomForm(request.POST)
+        # print(request.POST)
+        if form.is_valid():
+            room = form.save()
+            room_list = FloorSize.objects.order_by('-name')
+            context = {'room_list': room_list}
+            return render(request, template, context)
     else:
-        selected_room.save()
-        return HttpResponseRedirect(reverse('room:result', args=(room.id, )))
+        form = RoomForm()
+    room_list = FloorSize.objects.order_by('-name')
+    context = {'room_list': room_list}
+    return render(request, template, context)

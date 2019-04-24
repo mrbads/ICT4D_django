@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 # Create your models here.
 class FloorSize(models.Model):
@@ -10,3 +11,9 @@ class FloorSize(models.Model):
 
     def __str__(self):
         return self.name
+
+class RoomForm(ModelForm):
+    """docstring for RoomForm."""
+    class Meta:
+        model = FloorSize
+        fields = '__all__'

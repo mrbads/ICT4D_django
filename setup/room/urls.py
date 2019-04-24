@@ -7,5 +7,5 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:pk>/result/', views.ResultsView.as_view(), name='result'),
-    path('<int:room_id>/input/', views.input, name='input'),
+    path('new', views.new, name='new'),
 ]
